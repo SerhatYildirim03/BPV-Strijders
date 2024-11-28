@@ -1,0 +1,251 @@
+/* Algemene styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+  
+  /* Header styling */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #29b6f6;
+    padding: 10px 20px;
+  }
+  
+  .logo {
+    height: 40px;
+  }
+  
+  .nav a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .settings-icon {
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  /* Main content styling */
+  .main {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .upload-section,
+  .file-upload,
+  .note-section {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .upload-section {
+    flex: 1;
+  }
+  
+  .file-upload {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .upload-box {
+    text-align: center;
+    padding: 20px;
+    border: 2px dashed #29b6f6;
+    border-radius: 8px;
+  }
+  
+  .upload-box p {
+    margin: 10px 0;
+  }
+  
+  .upload-box a {
+    color: #29b6f6;
+    text-decoration: none;
+  }
+  
+  .note-section {
+    flex: 1;
+  }
+  
+  .title-input,
+  .description-input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .title-input {
+    height: 40px;
+  }
+  
+  .description-input {
+    height: 100px;
+  }
+  
+
+  /* Algemene styling */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+
+  /* Header styling */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #29b6f6;
+    padding: 10px 20px;
+  }
+
+  .logo {
+    height: 40px;
+  }
+
+  .nav a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .settings-icon {
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+  }
+
+  /* Main content styling */
+  .main {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .upload-section,
+  .file-upload,
+  .note-section,
+  .feedback-section {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+
+  .upload-section {
+    flex: 1;
+  }
+
+  .file-upload {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .upload-box {
+    text-align: center;
+    padding: 20px;
+    border: 2px dashed #29b6f6;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .upload-box:hover {
+    background-color: #e3f7ff;
+  }
+
+  .upload-box a {
+    color: #29b6f6;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .note-section {
+    flex: 1;
+  }
+
+  .title-input,
+  .description-input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  .title-input {
+    height: 40px;
+  }
+
+  .description-input {
+    height: 100px;
+  }
+
+  /* Feedback form styling */
+  .feedback-section {
+    flex: 1;
+  }
+
+  .feedback-input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  .feedback-textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  .submit-feedback {
+    padding: 10px 20px;
+    background-color: #29b6f6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .submit-feedback:hover {
+    background-color: #0288d1;
+  }
+
+  .feedback-display {
+    margin-top: 20px;
+  }
+
+  .feedback-item {
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+  }
+

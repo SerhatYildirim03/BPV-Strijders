@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inlevermomenten</title>
+  <link rel="stylesheet" href="inlevercss.css">
+</head>
+<body>
+  <header class="header">
+    <img src="Logo_BPV_trans.png" alt="Logo" class="logo">
+    <nav class="nav">
+      <a href="#">Inlever momenten</a>
+      <a href="#">Voortgangs overzicht</a>
+      <a href="#">Betrokkenheid</a>
+      <a href="#">Docenten</a>
+      <a href="#">Notificaties</a>
+      <a href="#">Rapportage</a>
+    </nav>
+    <div class="settings-icon">⚙️</div>
+  </header>
+
+  <main class="main">
+    <section class="upload-section">
+      <h2>Recent Geüpload📥</h2>
+      <div class="recent-upload" id="recentUploads"></div>
+    </section>
+
+    <section class="file-upload">
+      <div class="upload-box" id="uploadBox">
+        <p>Sleep uw bestand hierin</p>
+        <p>Of Kies je bestand <a href="#" id="uploadLink">hier</a></p>
+      </div>
+      <input type="file" id="fileInput" style="display: none;">
+    </section>
+
+    <section class="note-section">
+      <h2>Voeg Notitie bij📄</h2>
+      <input type="text" placeholder="Titel Beschrijving" class="title-input">
+      <textarea placeholder="Voeg Extra Beschrijving Toe" class="description-input"></textarea>
+    </section>
+
+    <section class="feedback-section">
+      <h2>Geef Feedback💬</h2>
+      <input type="text" placeholder="Uw naam" class="feedback-input" id="feedbackName">
+      <textarea placeholder="Uw feedback" class="feedback-textarea" id="feedbackMessage"></textarea>
+      <button class="submit-feedback" id="submitFeedback">Verstuur Feedback</button>
+
+      <div class="feedback-display" id="feedbackDisplay">
+        <!-- Feedback items will be displayed here -->
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Selecteer elementen
+    const uploadBox = document.getElementById('uploadBox');
+    const uploadLink = document.getElementById('uploadLink');
+    const fileInput = document.getElementById('fileInput');
+    const recentUploads = document.getElementById('recentUploads');
+
+    // Open bestandsverkenner
+    uploadBox.addEventListener('click', () => fileInput.click());
+    uploadLink.addEventListener('click', (e) => {
+      e.preventDefault(); // Voorkom standaard linkgedrag
+      fileInput.click();
+    });
+
+    // Voeg bestand toe aan Recent Geüpload
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const fileItem = document.createElement('p');
+        fileItem.textContent = file.name;
+        recentUploads.appendChild(fileItem);
+        alert(`Bestand toegevoegd: ${file.name}`);
+      }
+    });
+
+    // Feedback functionaliteit
+    const feedbackName = document.getElementById('feedbackName');
+    const feedbackMessage = document.getElementById('feedbackMessage');
+    const submitFeedback = document.getElementById('submitFeedback');
+    const feedbackDisplay = document.getElementById('feedbackDisplay');
+
+    submitFeedback.addEventListener('click', () => {
+      const name = feedbackName.value.trim();
+      const message = feedbackMessage.value.trim();
+
+      if (name && message) {
+        const feedbackItem = document.createElement('div');
+        feedbackItem.classList.add('feedback-item');
+        feedbackItem.innerHTML = `<strong>${name}</strong>: <p>${message}</p>`;
+        feedbackDisplay.appendChild(feedbackItem);
+
+        // Velden wissen na invoer
+        feedbackName.value = '';
+        feedbackMessage.value = '';
+      } else {
+        alert('Vul zowel uw naam als feedback in.');
+      }
+    });
+  </script>
+</body>
+</html>
