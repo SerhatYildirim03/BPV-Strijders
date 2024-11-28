@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beroepspraktijkvorming Strijders - Docenten Dashboard</title>
+    <link rel="stylesheet" href="DocentStyle.css">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="left-section">
+            <img src="images/Logo_BPV_trans.png" alt="Beroepspraktijkvorming Logo" class="logo">
+            <div class="nav-links">
+                <a href="#" onclick="showSection('inleverMomenten')">Inlevermomenten</a>
+                <a href="#" onclick="showSection('voortgang')">Voortgangsoverzicht</a>
+                <a href="#" onclick="showSection('betrokkenheid')">Betrokkenheid</a>
+                <a href="docenten.html">Docenten Portaal</a>
+                <a href="#" onclick="showSection('notificaties')">Meldingen</a>
+                <a href="#" onclick="showSection('rapportage')">Rapportages</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="welcome">Docenten Dashboard</h1>
+
+        <div class="student-grid" id="studentGrid">
+            <!-- Studenten kaarten worden hier dynamisch toegevoegd -->
+        </div>
+    </div>
+
+    <div class="student-details" id="studentDetails">
+        <div class="details-content">
+            <button class="close-button" onclick="closeStudentDetails()">×</button>
+            <div id="studentDetailsContent">
+                <!-- Student details worden hier dynamisch toegevoegd -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Common tasks for all students
+        const commonTasks = [
+            {
+                titel: "Oriëntatie op het BPV-bedrijf",
+                beschrijving: "Een persoonlijke portfolio website maken met HTML, CSS en JavaScript",
+                deadline: "2024-12-15",
+                documents: [
+                    { naam: "Portfolio Template", url: "files/portfolio-template.pdf" },
+                ]
+            },
+            {
+                titel: "Persoonlijke ontwikkeling & Plan van aanpak",
+                beschrijving: "ERD en database structuur maken voor eindproject",
+                deadline: "2024-11-30",
+                documents: [
+                    { naam: "ERD Examples", url: "files/erd-examples.pdf" },
+                ]
+            }
+        ];
+
+        // Student data
+        const students = [
+            {
+                id: 1,
+                naam: "Emma de Vries",
+                studentNummer: "500849261",
+                opleiding: "Software Developer",
+                niveau: "Niveau 4",
+                leerjaar: "2e jaar",
+                bedrijf: "Tech Solutions BV",
+                taskStatus: ["Open", "Open"]
+            },
+            {
+                id: 2,
+                naam: "Lucas Bakker",
+                studentNummer: "500849262",
+                opleiding: "Software Developer",
+                niveau: "Niveau 4",
+                leerjaar: "2e jaar",
+                bedrijf: "Innovatech NL",
+                taskStatus: ["Afgerond", "Open"]
+            },
+            {
+                id: 3,
+                naam: "Sophie van Dijk",
+                studentNummer: "500849263",
+                opleiding: "Software Developer",
+                niveau: "Niveau 4",
+                leerjaar: "2e jaar",
+                bedrijf: "CodeCrafters BV",
+                taskStatus: ["Open", "Afgerond"]
+            }
+        ];
+
+        function renderStudentGrid() {
+            const grid = document.getElementById('studentGrid');
+            grid.innerHTML = students.map(student => `
+                <div class="student-card" onclick="showStudentDetails(${student.id})">
+                    <h3>${student.naam}</h3>
+                    <p>Studentnummer: ${student.studentNummer}</p>
+                    <p>Opleiding: ${student.opleiding}</p>
+                    <p>StageBedrijf: ${student.bedrijf}</p>
+                    <p>Aantal taken: ${commonTasks.length}</p>
+                </div>
+            `).join('');
+        }
+
+        function showStudentDetails(studentId) {
+            const student = students.find(s => s.id === studentId);
+            const detailsContainer = document.getElementById('studentDetails');
+            const content = document.getElementById('studentDetailsContent');
+
+            content.innerHTML = `
+                <h2>${student.naam}</h2>
+                <p><strong>Studentnummer:</strong> ${student.studentNummer}</p>
+                <p><strong>Opleiding:</strong> ${student.opleiding}</p>
+                <p><strong>Niveau:</strong> ${student.niveau}</p>
+                <p><strong>Leerjaar:</strong> ${student.leerjaar}</p>
+                
+                <h3>Taken</h3>
+                <div class="task-list">
+                    ${commonTasks.map((taak, index) => `
+                        <div class="task-item">
+                            <h4>${taak.titel}
+                                <span class="status-badge status-${student.taskStatus[index].toLowerCase().replace(' ', '')}">
+                                    ${student.taskStatus[index]}
+                                </span>
+                            </h4>
+                            <p>${taak.beschrijving}</p>
+                            <p><strong>Deadline:</strong> ${taak.deadline}</p>
+                            <h5>Documenten:</h5>
+                            <ul class="document-list">
+                                ${taak.documents.map(doc => `
+                                    <li>
+                                        <a href="${doc.url}" download>${doc.naam}</a>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                            <button onclick="toggleTaskStatus(${student.id}, ${index})">
+                                Markeer als ${student.taskStatus[index] === "Open" ? "Afgerond" : "Open"}
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            detailsContainer.classList.add('active');
+        }
+
+        function closeStudentDetails() {
+            const detailsContainer = document.getElementById('studentDetails');
+            detailsContainer.classList.remove('active');
+        }
+
+        function toggleTaskStatus(studentId, taskIndex) {
+            const student = students.find(s => s.id === studentId);
+            student.taskStatus[taskIndex] = 
+                student.taskStatus[taskIndex] === "Open" ? "Afgerond" : "Open";
+            showStudentDetails(studentId); // Refresh details view
+            renderStudentGrid(); // Refresh grid for updated counts
+        }
+
+        // Initialiseer de pagina
+        document.addEventListener('DOMContentLoaded', () => {
+            renderStudentGrid();
+        });
+    </script>
+</body>
+</html>
