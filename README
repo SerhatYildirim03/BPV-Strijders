@@ -1,0 +1,52 @@
+BPV Dashboard
+Vereisten
+
+Python 3.8+
+pip
+Node.js (optioneel)
+
+Backend Installatie
+
+Navigeer naar de backend map
+
+bashCopycd backend
+python3 -m venv venv
+source venv/bin/activate  # Op Windows: venv\Scripts\activate
+pip install -r requirements.txt
+
+Database initialiseren
+
+bashCopypython database.py
+
+Backend starten
+
+bashCopypython app.py
+Frontend Ontwikkeling
+
+Open frontend/index.html rechtstreeks in een browser
+Voor lokale ontwikkeling: gebruik Live Server extensie in VSCode
+
+Ontwikkelingsinstructies
+
+Backend draait op http://localhost:5000
+Frontend kan los worden geopend of via de backend
+
+Bekend Issues
+
+Beperkte foutafhandeling
+Geen authenticatie geïmplementeerd
+
+
+Installatie Instructies
+
+Clone de repository
+Installeer backend dependencies
+Initialiseer de database
+Start de backend server
+Open de frontend
+
+Opmerkingen:
+
+Dit is een basis implementatie
+Er is geen authenticatie
+De frontend communiceert met een eenvoudige Flask backend
