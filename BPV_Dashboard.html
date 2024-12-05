@@ -3,29 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BPV Dashboard</title>
+    <title>Beroepspraktijkvorming Dashboard</title>
     <link rel="stylesheet" href="style_dash.css">
-</head>
+</head>          
 <body>
-    <nav class="top-nav">
+    <div class="top-nav">
         <div class="left-section">
-            <img src="logo.png" alt="BPV Logo" class="logo">
+            <img src="images/Logo_BPV_trans.png" class="logo" alt="Logo">
             <div class="nav-links">
-                <a href="#" data-section="inleverMomenten">Inlevermomenten</a>
-                <a href="#" data-section="voortgang">Voortgangsoverzicht</a>
-                <a href="#" data-section="betrokkenheid">Betrokkenheid</a>
-                <a href="#" data-section="notificaties">Meldingen</a>
-                <a href="#" data-section="rapportage">Rapportages</a>
+                <a href="#">Dashboard</a>
+                <a href="#">Taken</a>
+                <a href="#">Meldingen</a>
+                <a href="#">Inleveren</a>
             </div>
         </div>
-        <span class="settings-icon" title="Instellingen">⚙️</span>
-    </nav>
+        <div class="settings-icon" onclick="toggleSettingsMenu()">⚙️</div>
+        <div class="settings-menu" id="settingsMenu">
+            <a href="#">Account Instellingen</a>
+            <a href="#">Privacy Instellingen</a>
+            <a href="#">Log uit</a>
+        </div>
+    </div>
 
     <div class="container">
         <h1 class="welcome">Welkom bij jouw BPV Dashboard</h1>
 
         <div class="grid">
-            <div class="card tasks-card">
+            <div class="card">
                 <div class="card-header">
                     📋 Openstaande Taken
                 </div>
@@ -34,7 +38,7 @@
                 </div>
             </div>
 
-            <div class="card notifications-card">
+            <div class="card">
                 <div class="card-header">
                     🔔 Belangrijke Meldingen
                 </div>
@@ -45,17 +49,17 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="overlay" id="overlay"></div>
     
-    <div class="modal upload-modal" id="uploadModal">
+    <div class="upload-popup" id="uploadPopup">
         <h3>Document Inleveren</h3>
         <input type="file" id="documentInput" />
-        <textarea id="descriptionInput" placeholder="Beschrijving..."></textarea>
-        <div class="modal-actions">
-            <button class="btn btn-primary" id="submitDocument">Inleveren</button>
-            <button class="btn btn-secondary" id="cancelUpload">Annuleren</button>
-        </div>
+        <textarea id="descriptionInput" placeholder="Voeg een beschrijving toe..."></textarea>
+        <button class="btn" onclick="uploadDocument()">Inleveren</button>
+        <button class="btn" onclick="closeUploadPopup()">Annuleren</button>
     </div>
+
+    <audio id="notificationSound" src="sounds/notification-sound.mp3" preload="auto"></audio>
 
     <script src="script_dash.js"></script>
 </body>
