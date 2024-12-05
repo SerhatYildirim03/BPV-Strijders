@@ -1,52 +1,70 @@
 BPV Dashboard
 Vereisten
-
 Python 3.8+
-pip
-Node.js (optioneel)
-
-Backend Installatie
-
-Navigeer naar de backend map
-
-bashCopycd backend
-python3 -m venv venv
-source venv/bin/activate  # Op Windows: venv\Scripts\activate
-pip install -r requirements.txt
-
-Database initialiseren
-
-bashCopypython database.py
-
-Backend starten
-
-bashCopypython app.py
-Frontend Ontwikkeling
-
-Open frontend/index.html rechtstreeks in een browser
-Voor lokale ontwikkeling: gebruik Live Server extensie in VSCode
-
-Ontwikkelingsinstructies
-
-Backend draait op http://localhost:5000
-Frontend kan los worden geopend of via de backend
-
-Bekend Issues
-
-Beperkte foutafhandeling
-Geen authenticatie geïmplementeerd
+pip (Python package manager)
+Node.js (optioneel, alleen als er node-gebaseerde tools worden gebruikt)
 
 
 Installatie Instructies
+Volg deze stappen om de applicatie op je lokale machine te installeren en uit te voeren.
 
-Clone de repository
-Installeer backend dependencies
-Initialiseer de database
-Start de backend server
-Open de frontend
+1. Clone de repository
+Clone de repository naar je lokale machine:
 
-Opmerkingen:
+bash
+Code kopiëren
+git clone https://github.com/SerhatYildirim03/BPV-Strijders
+2. Backend Installatie
+Navigeer naar de backend map:
 
-Dit is een basis implementatie
-Er is geen authenticatie
-De frontend communiceert met een eenvoudige Flask backend
+bash
+Code kopiëren
+cd BPV-Strijders/backend
+Maak een virtuele omgeving aan:
+
+bash
+Code kopiëren
+python3 -m venv venv
+Activeer de virtuele omgeving:
+
+Op macOS/Linux:
+bash
+Code kopiëren
+source venv/bin/activate
+Op Windows:
+bash
+Code kopiëren
+venv\Scripts\activate
+Installeer de vereiste Python-pakketten:
+
+bash
+Code kopiëren
+pip install -r requirements.txt
+
+3. Database Initialisatie
+Initialiseer de database door het uitvoeren van het volgende Python-script:
+
+bash
+Code kopiëren
+python database.py
+
+4. Start de Backend Server
+Start de backend server:
+
+bash
+Code kopiëren
+python app.py
+De server draait nu op http://localhost:5000.
+
+5. Frontend Installatie
+Open de frontend map:
+
+bash
+Code kopiëren
+cd ../frontend
+Optie 1: Open het index.html bestand direct in je browser.
+
+Optie 2: Gebruik de Live Server extensie in VSCode om de frontend lokaal te draaien. Dit biedt een snellere manier om de frontend te testen met live herlaadfunctionaliteit.
+
+6. Backend en Frontend Verbinden
+Zodra de backend draait, kun je de frontend openen via je browser. De backend is bereikbaar op http://localhost:5000, en de frontend zou met de backend moeten communiceren.
