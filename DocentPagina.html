@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beroepspraktijkvorming Strijders - Docenten Dashboard</title>
     <link rel="stylesheet" href="DocentStyle.css">
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore-compat.js"></script>
+    
 </head>
 <body>
     <nav class="top-nav">
         <div class="left-section">
-            <img src="images/Logo_BPV_trans.png" alt="Beroepspraktijkvorming Logo" class="logo">
+            <img src="Logo_BPV_trans.png" alt="Beroepspraktijkvorming Logo" class="logo">
             <div class="nav-links">
                 <a href="#" onclick="showSection('inleverMomenten')">Inlevermomenten</a>
                 <a href="#" onclick="showSection('voortgang')">Voortgangsoverzicht</a>
@@ -39,77 +43,61 @@
     </div>
 
     <script>
-        // Common tasks for all students
-        const commonTasks = [
-            {
-                titel: "Oriëntatie op het BPV-bedrijf",
-                beschrijving: "Een persoonlijke portfolio website maken met HTML, CSS en JavaScript",
-                deadline: "2024-12-15",
-                documents: [
-                    { naam: "Portfolio Template", url: "files/portfolio-template.pdf" },
-                ]
-            },
-            {
-                titel: "Persoonlijke ontwikkeling & Plan van aanpak",
-                beschrijving: "ERD en database structuur maken voor eindproject",
-                deadline: "2024-11-30",
-                documents: [
-                    { naam: "ERD Examples", url: "files/erd-examples.pdf" },
-                ]
-            }
-        ];
+        // Firebase configuratie
+        const firebaseConfig = {
+            apiKey: "AIzaSyBU4d6uBPPiDL1FA0l7WT39wM1awdxxIv4",
+            authDomain: "testing-2f0f4.firebaseapp.com",
+            projectId: "testing-2f0f4",
+            storageBucket: "testing-2f0f4.firebasestorage.app",
+            messagingSenderId: "1009751472909",
+            appId: "1:1009751472909:web:c93b9a4a44350575888e44"
+        };
 
-        // Student data
-        const students = [
-            {
-                id: 1,
-                naam: "Emma de Vries",
-                studentNummer: "500849261",
-                opleiding: "Software Developer",
-                niveau: "Niveau 4",
-                leerjaar: "2e jaar",
-                bedrijf: "Tech Solutions BV",
-                taskStatus: ["Open", "Open"]
-            },
-            {
-                id: 2,
-                naam: "Lucas Bakker",
-                studentNummer: "500849262",
-                opleiding: "Software Developer",
-                niveau: "Niveau 4",
-                leerjaar: "2e jaar",
-                bedrijf: "Innovatech NL",
-                taskStatus: ["Afgerond", "Open"]
-            },
-            {
-                id: 3,
-                naam: "Sophie van Dijk",
-                studentNummer: "500849263",
-                opleiding: "Software Developer",
-                niveau: "Niveau 4",
-                leerjaar: "2e jaar",
-                bedrijf: "CodeCrafters BV",
-                taskStatus: ["Open", "Afgerond"]
-            }
-        ];
+        // Initialiseer Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
+        let students = [];
+
+        // Ophalen van studenten uit Firestore
+        function fetchStudents() {
+            db.collection('students').get()
+                .then(querySnapshot => {
+                    students = querySnapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+                    renderStudentGrid();
+                })
+                .catch(error => {
+                    console.error("Fout bij het ophalen van studenten: ", error);
+                });
+        }
+
+        // Renderen van studentkaarten in de grid
         function renderStudentGrid() {
             const grid = document.getElementById('studentGrid');
             grid.innerHTML = students.map(student => `
-                <div class="student-card" onclick="showStudentDetails(${student.id})">
+                <div class="student-card" onclick="showStudentDetails('${student.id}')">
                     <h3>${student.naam}</h3>
                     <p>Studentnummer: ${student.studentNummer}</p>
                     <p>Opleiding: ${student.opleiding}</p>
                     <p>StageBedrijf: ${student.bedrijf}</p>
-                    <p>Aantal taken: ${commonTasks.length}</p>
+                    <p>Aantal taken: ${student.taken.length}</p>
                 </div>
             `).join('');
         }
 
+        // Toon studentdetails en taken
         function showStudentDetails(studentId) {
             const student = students.find(s => s.id === studentId);
             const detailsContainer = document.getElementById('studentDetails');
             const content = document.getElementById('studentDetailsContent');
+
+            if (!student) {
+                console.error("Student niet gevonden!");
+                return;
+            }
 
             content.innerHTML = `
                 <h2>${student.naam}</h2>
@@ -120,11 +108,11 @@
                 
                 <h3>Taken</h3>
                 <div class="task-list">
-                    ${commonTasks.map((taak, index) => `
+                    ${student.taken.map((taak, index) => `
                         <div class="task-item">
                             <h4>${taak.titel}
-                                <span class="status-badge status-${student.taskStatus[index].toLowerCase().replace(' ', '')}">
-                                    ${student.taskStatus[index]}
+                                <span class="status-badge status-${taak.status.toLowerCase().replace(' ', '')}">
+                                    ${taak.status}
                                 </span>
                             </h4>
                             <p>${taak.beschrijving}</p>
@@ -137,8 +125,8 @@
                                     </li>
                                 `).join('')}
                             </ul>
-                            <button onclick="toggleTaskStatus(${student.id}, ${index})">
-                                Markeer als ${student.taskStatus[index] === "Open" ? "Afgerond" : "Open"}
+                            <button onclick="toggleTaskStatus('${studentId}', ${index})">
+                                Markeer als ${taak.status === "Open" ? "Afgerond" : "Open"}
                             </button>
                         </div>
                     `).join('')}
@@ -148,22 +136,38 @@
             detailsContainer.classList.add('active');
         }
 
+        // Sluit de weergave van studentdetails
         function closeStudentDetails() {
             const detailsContainer = document.getElementById('studentDetails');
             detailsContainer.classList.remove('active');
         }
 
+        // Wissel de status van een taak en sla deze op in Firestore
         function toggleTaskStatus(studentId, taskIndex) {
             const student = students.find(s => s.id === studentId);
-            student.taskStatus[taskIndex] = 
-                student.taskStatus[taskIndex] === "Open" ? "Afgerond" : "Open";
-            showStudentDetails(studentId); // Refresh details view
-            renderStudentGrid(); // Refresh grid for updated counts
+            if (!student) {
+                console.error("Student niet gevonden!");
+                return;
+            }
+
+            const newStatus = student.taken[taskIndex].status === "Open" ? "Afgerond" : "Open";
+            student.taken[taskIndex].status = newStatus;
+
+            // Sla de bijgewerkte taken op in Firestore
+            db.collection('students').doc(studentId).update({
+                taken: student.taken
+            }).then(() => {
+                console.log("Taakstatus bijgewerkt!");
+                showStudentDetails(studentId); // Vernieuw de detailsweergave
+                renderStudentGrid(); // Vernieuw de grid voor bijgewerkte tellingen
+            }).catch(error => {
+                console.error("Fout bij het bijwerken van de taakstatus: ", error);
+            });
         }
 
         // Initialiseer de pagina
         document.addEventListener('DOMContentLoaded', () => {
-            renderStudentGrid();
+            fetchStudents(); // Haal studenten op en render ze
         });
     </script>
 </body>
