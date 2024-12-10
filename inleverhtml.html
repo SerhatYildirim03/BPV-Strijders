@@ -4,102 +4,132 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inlevermomenten</title>
+  <!-- Bootstrap CSS voor styling -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome voor iconen -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <!-- Custom CSS bestand -->
   <link rel="stylesheet" href="inlevercss.css">
 </head>
-<body>
-  <header class="header">
-    <img src="Logo_BPV_trans.png" alt="Logo" class="logo">
-    <nav class="nav">
-      <a href="#">Inlever momenten</a>
-      <a href="#">Voortgangs overzicht</a>
-      <a href="#">Betrokkenheid</a>
-      <a href="#">Docenten</a>
-      <a href="#">Notificaties</a>
-      <a href="#">Rapportage</a>
-    </nav>
+<body class="bg-light">
+  <!-- Navigatiebalk bovenaan -->
+  <nav class="top-nav">
+    <div class="left-section">
+      <!-- Logo -->
+      <img src="Logo_BPV_trans.png" alt="Beroepspraktijkvorming Logo" class="logo">
+      <!-- Navigatie links -->
+      <div class="nav-links">
+        <a href="#" onclick="showSection('inleverMomenten')">Inlevermomenten</a>
+        <a href="#" onclick="showSection('voortgang')">Voortgangsoverzicht</a>
+        <a href="#" onclick="showSection('betrokkenheid')">Betrokkenheid</a>
+        <a href="docenten.html">Docenten Portaal</a>
+        <a href="#" onclick="showSection('notificaties')">Meldingen</a>
+        <a href="#" onclick="showSection('rapportage')">Rapportages</a>
+      </div>
+    </div>
+    <!-- Instellingen icoon -->
     <div class="settings-icon">⚙️</div>
-  </header>
+  </nav>
 
-  <main class="main">
-    <section class="upload-section">
-      <h2>Recent Geüpload📥</h2>
-      <div class="recent-upload" id="recentUploads"></div>
-    </section>
-
-    <section class="file-upload">
-      <div class="upload-box" id="uploadBox">
-        <p>Sleep uw bestand hierin</p>
-        <p>Of Kies je bestand <a href="#" id="uploadLink">hier</a></p>
+  <!-- Hoofdinhoud -->
+  <main class="container py-4">
+    <div class="row g-4">
+      <!-- Recent geüploade bestanden sectie -->
+      <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-header bg-white">
+            <h5 class="card-title mb-0">
+              <i class="fas fa-clock text-primary me-2"></i>Recent Geüpload
+            </h5>
+          </div>
+          <div class="card-body">
+            <!-- Container voor recent geüploade bestanden -->
+            <div class="recent-upload custom-scrollbar" id="recentUploads"></div>
+          </div>
+        </div>
       </div>
-      <input type="file" id="fileInput" style="display: none;">
-    </section>
 
-    <section class="note-section">
-      <h2>Voeg Notitie bij📄</h2>
-      <input type="text" placeholder="Titel Beschrijving" class="title-input">
-      <textarea placeholder="Voeg Extra Beschrijving Toe" class="description-input"></textarea>
-    </section>
-
-    <section class="feedback-section">
-      <h2>Geef Feedback💬</h2>
-      <input type="text" placeholder="Uw naam" class="feedback-input" id="feedbackName">
-      <textarea placeholder="Uw feedback" class="feedback-textarea" id="feedbackMessage"></textarea>
-      <button class="submit-feedback" id="submitFeedback">Verstuur Feedback</button>
-
-      <div class="feedback-display" id="feedbackDisplay">
-        <!-- Feedback items will be displayed here -->
+      <!-- Bestand upload sectie -->
+      <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-header bg-white">
+            <h5 class="card-title mb-0">
+              <i class="fas fa-upload text-primary me-2"></i>Upload Bestand
+            </h5>
+          </div>
+          <div class="card-body">
+            <!-- Drag & drop upload box -->
+            <div class="upload-box" id="uploadBox">
+              <i class="fas fa-cloud-upload-alt fa-3x text-primary mb-3"></i>
+              <p class="mb-2">Sleep uw bestand hierin</p>
+              <p class="mb-0">Of <a href="#" id="uploadLink" class="text-primary">kies een bestand</a></p>
+            </div>
+            <!-- Verborgen bestandsinput -->
+            <input type="file" id="fileInput" style="display: none;">
+          </div>
+        </div>
       </div>
-    </section>
+
+      <!-- Notities sectie -->
+      <div class="col-12">
+        <div class="card shadow-sm">
+          <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">
+              <i class="fas fa-sticky-note text-primary me-2"></i>Notities
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <!-- Notitie invoervelden -->
+              <div class="col-md-6">
+                <input type="text" placeholder="Titel" class="form-control mb-3" id="titleInput">
+                <textarea placeholder="Beschrijving" class="form-control mb-3" id="descriptionInput" rows="4"></textarea>
+                <button class="btn btn-primary w-100" id="addNoteButton">
+                  <i class="fas fa-plus me-2"></i>Voeg Notitie Toe
+                </button>
+              </div>
+              <!-- Container voor weergave van notities -->
+              <div class="col-md-6">
+                <div id="noteDisplay" class="notes-container custom-scrollbar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feedback sectie -->
+      <div class="col-12">
+        <div class="card shadow-sm">
+          <div class="card-header bg-white">
+            <h5 class="card-title mb-0">
+              <i class="fas fa-comments text-primary me-2"></i>Feedback
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <!-- Feedback invoervelden -->
+              <div class="col-md-6">
+                <input type="text" placeholder="Uw naam" class="form-control mb-3" id="feedbackName">
+                <textarea placeholder="Uw feedback" class="form-control mb-3" id="feedbackMessage" rows="4"></textarea>
+                <button class="btn btn-primary w-100" id="submitFeedback">
+                  <i class="fas fa-paper-plane me-2"></i>Verstuur Feedback
+                </button>
+              </div>
+              <!-- Container voor weergave van feedback -->
+              <div class="col-md-6">
+                <div id="feedbackDisplay" class="feedback-container custom-scrollbar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <script>
-    // Selecteer elementen
-    const uploadBox = document.getElementById('uploadBox');
-    const uploadLink = document.getElementById('uploadLink');
-    const fileInput = document.getElementById('fileInput');
-    const recentUploads = document.getElementById('recentUploads');
-
-    // Open bestandsverkenner
-    uploadBox.addEventListener('click', () => fileInput.click());
-    uploadLink.addEventListener('click', (e) => {
-      e.preventDefault(); // Voorkom standaard linkgedrag
-      fileInput.click();
-    });
-
-    // Voeg bestand toe aan Recent Geüpload
-    fileInput.addEventListener('change', (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        const fileItem = document.createElement('p');
-        fileItem.textContent = file.name;
-        recentUploads.appendChild(fileItem);
-        alert(`Bestand toegevoegd: ${file.name}`);
-      }
-    });
-
-    // Feedback functionaliteit
-    const feedbackName = document.getElementById('feedbackName');
-    const feedbackMessage = document.getElementById('feedbackMessage');
-    const submitFeedback = document.getElementById('submitFeedback');
-    const feedbackDisplay = document.getElementById('feedbackDisplay');
-
-    submitFeedback.addEventListener('click', () => {
-      const name = feedbackName.value.trim();
-      const message = feedbackMessage.value.trim();
-
-      if (name && message) {
-        const feedbackItem = document.createElement('div');
-        feedbackItem.classList.add('feedback-item');
-        feedbackItem.innerHTML = `<strong>${name}</strong>: <p>${message}</p>`;
-        feedbackDisplay.appendChild(feedbackItem);
-
-        // Velden wissen na invoer
-        feedbackName.value = '';
-        feedbackMessage.value = '';
-      } else {
-        alert('Vul zowel uw naam als feedback in.');
-      }
-    });
-  </script>
+  <!-- Scripts -->
+  <!-- Bootstrap JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JavaScript -->
+  <script src="inleverjs.js"></script>
 </body>
 </html>
